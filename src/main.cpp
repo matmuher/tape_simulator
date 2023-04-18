@@ -6,7 +6,7 @@
 
 int ret_max = 0;
 
-void sort_tape( const ts::Tape& input_tape,
+void qsort_tape( const ts::Tape& input_tape,
                 ts::Tape& output_tape)
 {
     ++ret_max;
@@ -57,21 +57,102 @@ void sort_tape( const ts::Tape& input_tape,
         ts::log("\n");
     }   
 
-    sort_tape(lower_tape, output_tape);
-    sort_tape(upper_tape, output_tape);
+    qsort_tape(lower_tape, output_tape);
+    qsort_tape(upper_tape, output_tape);
 }
 
-int main()
+ts::Tape merge_tapes(const ts::Tape& lhs, const ts::Tape& rhs)
 {
-    ts::Tape input_tape{"tape.txt"};
+    size_t lhs_size = lhs.get_size();
+    size_t rhs_size = rhs.get_size();
+    
+    size_t output_size = lhs_size + rhs_size;
+    ts::Tape output{output_size};
+    output.move_right();
+
+    while ((lhs.get_pos() >= 1) && (rhs.get_pos() >= 1))
+    {
+        int lhs_elem = lhs.read();
+        int rhs_elem = rhs.read();
+
+        ts::log("cmp: %d and %d\n", lhs_elem, rhs_elem);
+
+        if (lhs_elem < rhs_elem)
+        {
+            ts::log("Lhs: %d\n", lhs_elem);
+            output.write(lhs_elem);
+            lhs.move_left();
+        }
+        else
+        {
+            ts::log("Rhs: %d\n", rhs_elem);
+            output.write(rhs_elem);
+            rhs.move_left();
+        }
+
+        output.move_right();
+    }
+
+
+    // TODO copypaste
+    while (lhs.get_pos() >= 1)
+    {
+        int elem = lhs.read();
+
+        output.write(elem);
+        output.move_right();
+
+        lhs.move_left();
+    }
+
+    while (rhs.get_pos() >= 1)
+    {
+        int elem = rhs.read();
+
+        output.write(elem);
+        output.move_right();
+
+        rhs.move_left();
+    }
+
+    output.dump();
+
+    return output;
+}
+
+void launch_sort_tape(  const std::string& input_tape_name,
+                        const std::string& output_tape_name)
+{
+    ts::Tape input_tape{input_tape_name};
     input_tape.scroll_to_end();
 
-    ts::Tape output_tape{10, "tape_out.txt"};
+    ts::Tape output_tape{input_tape.get_size(), output_tape_name};
+    qsort_tape(input_tape, output_tape);
+}
 
-    sort_tape(input_tape, output_tape);
-    
-    input_tape.dump();
-    output_tape.dump();
+int main(int argc, const char* argv[])
+{
+    ts::Tape tp1{"tp1.txt"};
+    ts::Tape tp2{"tp2.txt"};
+
+    tp1.scroll_to_end();
+    tp2.scroll_to_end();
+
+    ts::Tape merged = merge_tapes(tp1, tp2);
+    merged.dump();
+
+    exit(1);
+
+    if (argc < 3)
+    {
+        std::cout   << "Please, enter cmd coefficients, e.g:\n\n"
+                    << "\t./TapeSimulator input.txt output.txt\n\n";
+
+    }
+    else
+    {
+        launch_sort_tape(argv[1], argv[2]);
+    }
 
     return 0;
 }
