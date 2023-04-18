@@ -3,6 +3,7 @@
 #include <string>
 #include <cstddef>
 #include <fstream>
+#include <vector>
 
 namespace ts
 {
@@ -10,15 +11,25 @@ namespace ts
     {   
         static std::size_t tmp_id;
 
-        std::size_t m_size;
+        const std::size_t m_size;
         std::size_t head_pos;
-        
-        std::fstream file;
+        std::string m_name;
+
+        std::vector<int> vec;
 
     public:
 
-        Tape(std::size_t size, const std::string& name = "tmp") {}
+        Tape(std::size_t size, const std::string& name, bool init_from_file = true);
+        Tape(std::size_t size);
+
+        void move_left();
+        void move_right();
+
+        int read() const;
+        void write(int val);
+
+        void dump() const;
+
+        ~Tape();
     };
 }
-
-std::size_t ts::Tape::tmp_id = 0;

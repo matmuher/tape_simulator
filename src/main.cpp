@@ -1,6 +1,6 @@
 #include <iostream>
 #include <TapeSimulator.hpp>
-
+#include <Logs.hpp>
 #include <vector>
 
 using arr_t = std::vector<int>;
@@ -89,16 +89,11 @@ arr_t merge_sort(arr_t arr)
 
 int main()
 {
-    arr_t b = {1, 7, -3, 5, 12, 9};
+    ts::Tape tape1{20};
+    tape1.dump();
 
-    arr_t c = merge_sort(b);
-
-    for (auto x : c)
-    {
-        std::cout << x << ' ';
-    }
-
-    std::cout << '\n';
+    ts::Tape tape2{10, "tape.txt"};
+    tape2.dump();
 
     return 0;
 }
