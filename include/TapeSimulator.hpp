@@ -25,6 +25,8 @@ namespace ts
 
         static std::string create_name(const std::string& str);
 
+        bool is_in_borders(size_t i) const;
+
     public:
 
     // [ctor]
@@ -51,9 +53,14 @@ namespace ts
         void write_ml(int val);
         void write_mr(int val);
 
+        void scroll_to_end() const;
+        void scroll_to_start() const;
+
     // [get]
 
-        int get_size() const;
+        size_t get_size() const;
+
+        size_t get_pos() const;
 
     // [debug]
 

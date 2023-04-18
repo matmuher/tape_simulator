@@ -5,7 +5,7 @@
 #include <fstream>
 #include <cstdio>
 
-TODO RAII
+// TODO RAII
 
 namespace ts
 {

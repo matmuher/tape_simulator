@@ -64,7 +64,7 @@ namespace ts
 
     void Tape::move_right() const
     {
-        if (head_pos + 1 != m_size)
+        if (head_pos != m_size + 1)
         {
             ++head_pos;
         }
@@ -72,60 +72,100 @@ namespace ts
 
     int Tape::read() const
     {
-        return vec[head_pos];
+        if (is_in_borders(head_pos))
+        {
+            return vec[head_pos-1];
+        }
+
+        return -1;
     }
 
     void Tape::write(int val)
     {
-        vec[head_pos] = val;
+        info("Write to %s\n", m_name.c_str());
+
+        if (is_in_borders(head_pos))
+        {
+            vec[head_pos-1] = val;
+        }
     }
 
     int Tape::read_ml() const
     {
-        int ret = read();
         move_left();
+        int ret = read();
 
         return ret;
     }
 
     int Tape::read_mr() const
     {
-        int ret = read();
         move_right();
+        int ret = read();
 
         return ret;
     }
 
     void Tape::write_ml(int val)
     {
-        write(val);
         move_left();
+        write(val);
     }
 
     void Tape::write_mr(int val)
     {
-        write(val);
         move_right();
+        write(val);
+    }
+
+
+    void Tape::scroll_to_end() const
+    {
+        for (size_t i = head_pos; i < m_size; ++i)
+        {
+            move_right();
+        }
+    }
+
+    void Tape::scroll_to_start() const
+    {
+        for (size_t i = head_pos; i != 1; --i)
+        {
+            move_left();
+        }
     }
 
 // [get]
 
-    int Tape::get_size() const
+    size_t Tape::get_size() const
     {
         return m_size;
+    }
+
+    size_t Tape::get_pos() const
+    {
+        return head_pos;
     }
 
 // [debug]
 
     void Tape::dump() const
     {
-        info("Dump tape [%s]\n", m_name);
+        info("Dump tape [%s]\n", m_name.c_str());
 
-        log("\tSize(%d)\n", m_size);
+        log("\tSize(%u)\n", m_size);
+        log("\tHeadPos(%u)\n", head_pos);
 
-        for (std::size_t i = 0; i < m_size; ++i)
+        if (!vec.empty())
         {
-            log("%d ", vec[i]);
+            for (std::size_t i = 0; i < m_size; ++i)
+            {
+                log("%d ", vec[i]);
+            }
+        }
+        else
+        {
+            log("*empty*");
         }
 
         log("\n");  
@@ -151,13 +191,20 @@ namespace ts
 
     std::string Tape::create_name(const std::string& str)
     {
+        info("Create name from: %s\n", str.c_str());
+
         if (str.empty())
         {
-            return "tmp/tape" + std::to_string(++tmp_id);
+            return "/tmp/tape" + std::to_string(++tmp_id);
         }
         else
         {
             return str;
         }
+    }
+
+    bool Tape::is_in_borders(size_t i) const
+    {
+        return (1 <= i) && (i <= m_size);
     }
 }
