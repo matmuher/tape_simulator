@@ -15,10 +15,11 @@
 
 int main()
 {
-    ts::Tape tape1{20};
-    tape1.dump();
+    ts::Tape tape1{"tape.txt"};
+    ts::Tape tape2{10, "tape_out.txt"};
+    tape2.write(9);
 
-    ts::Tape tape2{"tape.txt"};
+    tape1.dump();
     tape2.dump();
 
     return 0;

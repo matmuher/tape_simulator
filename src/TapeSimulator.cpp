@@ -37,11 +37,11 @@ namespace ts
         const_cast<std::size_t&>(m_size) = vec.size();
     }
 
-    Tape::Tape(std::size_t size)
+    Tape::Tape(std::size_t size, const std::string& name)
     :
         m_size{size},
         head_pos{0},
-        m_name{"/tmp/tape" + std::to_string(++tmp_id)},
+        m_name{create_name(name)},
         vec{}
     {
         vec.reserve(m_size);
@@ -145,5 +145,19 @@ namespace ts
         file << '\n';
 
         file.close();
+    }
+
+// [private functions]
+
+    std::string Tape::create_name(const std::string& str)
+    {
+        if (str.empty())
+        {
+            return "tmp/tape" + std::to_string(++tmp_id);
+        }
+        else
+        {
+            return str;
+        }
     }
 }

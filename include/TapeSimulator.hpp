@@ -9,6 +9,10 @@ namespace ts
 {
     class Tape
     {   
+    private:
+
+    // [private members]
+
         static std::size_t tmp_id;
 
         const std::size_t m_size;
@@ -17,12 +21,17 @@ namespace ts
 
         std::vector<int> vec;
 
+    // [private functions]
+
+        std::string create_name(const std::string& str);
+
     public:
 
     // [ctor]
 
-        Tape(const std::string& name);
-        Tape(std::size_t size);
+        Tape(const std::string& name); // for inpute tape
+        Tape(std::size_t size, const std::string& name = "");
+
 
     // [interact]
 
@@ -56,3 +65,5 @@ namespace ts
         ~Tape();
     };
 }
+
+
