@@ -19,8 +19,12 @@ namespace ts
 
     public:
 
-        Tape(std::size_t size, const std::string& name, bool init_from_file = true);
+    // [ctor]
+
+        Tape(const std::string& name);
         Tape(std::size_t size);
+
+    // [interact]
 
         void move_left();
         void move_right();
@@ -28,7 +32,26 @@ namespace ts
         int read() const;
         void write(int val);
 
+        /*
+            [for easier working with tape]
+
+            read_ml = read + move_left
+            write_mr = write + move_right
+        */
+        int read_ml();
+        int read_mr();
+        void write_ml(int val);
+        void write_mr(int val);
+
+    // [get]
+
+        int get_size() const;
+
+    // [debug]
+
         void dump() const;
+
+    // [dtor]
 
         ~Tape();
     };
