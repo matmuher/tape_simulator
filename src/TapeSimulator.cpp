@@ -11,7 +11,7 @@ namespace ts
     Tape::Tape(const std::string& name)
     :
         m_size{0},
-        head_pos{0},
+        head_pos{1},
         m_name{name},
         vec{}
     {
@@ -40,7 +40,7 @@ namespace ts
     Tape::Tape(std::size_t size, const std::string& name)
     :
         m_size{size},
-        head_pos{0},
+        head_pos{1},
         m_name{create_name(name)},
         vec{}
     {
@@ -86,6 +86,7 @@ namespace ts
 
         if (is_in_borders(head_pos))
         {
+            info("Successfuly wrote: %d\n", val);
             vec[head_pos-1] = val;
         }
     }
@@ -121,7 +122,7 @@ namespace ts
 
     void Tape::scroll_to_end() const
     {
-        for (size_t i = head_pos; i < m_size; ++i)
+        for (size_t i = head_pos; i <= m_size; ++i)
         {
             move_right();
         }
@@ -129,7 +130,7 @@ namespace ts
 
     void Tape::scroll_to_start() const
     {
-        for (size_t i = head_pos; i != 1; --i)
+        for (size_t i = head_pos; i >= 1; --i)
         {
             move_left();
         }
@@ -145,6 +146,11 @@ namespace ts
     size_t Tape::get_pos() const
     {
         return head_pos;
+    }
+
+    std::string Tape::get_name() const
+    {
+        return m_name;
     }
 
 // [debug]

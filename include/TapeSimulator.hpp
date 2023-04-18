@@ -62,6 +62,8 @@ namespace ts
 
         size_t get_pos() const;
 
+        std::string get_name() const;
+
     // [debug]
 
         void dump() const;
