@@ -16,14 +16,14 @@ namespace ts
         static std::size_t tmp_id;
 
         const std::size_t m_size;
-        std::size_t head_pos;
-        std::string m_name;
+        mutable std::size_t head_pos;
+        const std::string m_name;
 
         std::vector<int> vec;
 
     // [private functions]
 
-        std::string create_name(const std::string& str);
+        static std::string create_name(const std::string& str);
 
     public:
 
@@ -32,11 +32,10 @@ namespace ts
         Tape(const std::string& name); // for inpute tape
         Tape(std::size_t size, const std::string& name = "");
 
-
     // [interact]
 
-        void move_left();
-        void move_right();
+        void move_left() const;
+        void move_right() const;
 
         int read() const;
         void write(int val);
@@ -47,8 +46,8 @@ namespace ts
             read_ml = read + move_left
             write_mr = write + move_right
         */
-        int read_ml();
-        int read_mr();
+        int read_ml() const;
+        int read_mr() const;
         void write_ml(int val);
         void write_mr(int val);
 

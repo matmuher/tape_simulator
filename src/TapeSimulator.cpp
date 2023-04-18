@@ -22,14 +22,14 @@ namespace ts
 
         if (!file)
         {
-            log() << "Can't open file " << name << '\n';
+            err("Can't open file %s\n", name);
         }
 
         for (int elem; file >> elem;)
         {
             vec.push_back(elem);
 
-            log() << "Read " << vec.size() << "th elem from file [" << name << "]: " << elem << "\n";
+            info("Read %uth elem from file [%s]: %d\n", vec.size(), name.c_str(), elem);
         }
         
         file.close();
@@ -54,7 +54,7 @@ namespace ts
 
 // [interact]
 
-    void Tape::move_left()
+    void Tape::move_left() const
     {
         if (head_pos != 0)
         {
@@ -62,7 +62,7 @@ namespace ts
         }
     }
 
-    void Tape::move_right()
+    void Tape::move_right() const
     {
         if (head_pos + 1 != m_size)
         {
@@ -80,7 +80,7 @@ namespace ts
         vec[head_pos] = val;
     }
 
-    int Tape::read_ml()
+    int Tape::read_ml() const
     {
         int ret = read();
         move_left();
@@ -88,7 +88,7 @@ namespace ts
         return ret;
     }
 
-    int Tape::read_mr()
+    int Tape::read_mr() const
     {
         int ret = read();
         move_right();
@@ -119,16 +119,16 @@ namespace ts
 
     void Tape::dump() const
     {
-        std::ostream& logs = log("dump tape " + m_name);
+        info("Dump tape [%s]\n", m_name);
 
-        logs << "size(" << m_size << "): ";
+        log("\tSize(%d)\n", m_size);
 
         for (std::size_t i = 0; i < m_size; ++i)
         {
-             logs << vec[i] << ' ';
+            log("%d ", vec[i]);
         }
 
-        logs << '\n';    
+        log("\n");  
     }
 
 // [dtor]

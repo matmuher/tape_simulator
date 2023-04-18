@@ -3,9 +3,13 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <cstdio>
+
+TODO RAII
 
 namespace ts
 {
-    std::ostream& log(const std::string& msg = "", const std::string filename = "log.txt");
-    std::ostream& err();
+    void info(const std::string& fmt, ...);
+    void log(const std::string& fmt, ...);
+    void err(const std::string& fmt, ...);
 }
