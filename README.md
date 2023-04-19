@@ -51,7 +51,7 @@ For example:
 
 ## Very basic tests
 
-To run tests it's enough to make all steps from [How to use](##-How-to-use) section. In the same /bin directory you should do:
+To run tests it's enough to make all steps from [How to use](#how-to-use) section. In the same /bin directory you should do:
 
 ```
 $ ./test_sort
