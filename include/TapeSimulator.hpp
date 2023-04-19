@@ -37,8 +37,8 @@ namespace ts
 
     // [ctor]
 
-        Tape(const std::string& name); // for inpute tape
-        Tape(std::size_t size, const std::string& name = "");
+        explicit Tape(const std::string& name); // for inpute tape
+        explicit Tape(std::size_t size, const std::string& name = "");
 
     // [interact]
 

@@ -5,12 +5,12 @@ namespace ts
 {
     Tape merge_tapes(const ts::Tape& lhs, const ts::Tape& rhs)
     {
-        ts::log("\n\n Merge [%s] and [%s]\n", lhs.get_name().c_str(), rhs.get_name().c_str());
+        log("\n\n Merge [%s] and [%s]\n", lhs.get_name().c_str(), rhs.get_name().c_str());
 
-        ts::log("\nLHS:\n");
+        log("\nLHS:\n");
         lhs.dump();
 
-        ts::log("\nRHS:\n");
+        log("\nRHS:\n");
         rhs.dump();
 
         size_t lhs_size = lhs.get_size();
@@ -22,24 +22,24 @@ namespace ts
         lhs.move_right();
         rhs.move_right();
 
-        ts::Tape output{output_size};
+        Tape output{output_size};
 
         while ((lhs.get_pos() <= lhs.get_size()) && (rhs.get_pos() <= rhs.get_size()))
         {
             int lhs_elem = lhs.read();
             int rhs_elem = rhs.read();
 
-            ts::log("cmp: %d and %d\n", lhs_elem, rhs_elem);
+            log("cmp: %d and %d\n", lhs_elem, rhs_elem);
 
             if (lhs_elem > rhs_elem)
             {
-                ts::log("Lhs: %d\n", lhs_elem);
+                log("Lhs: %d\n", lhs_elem);
                 output.write(lhs_elem);
                 lhs.move_right();
             }
             else
             {
-                ts::log("Rhs: %d\n", rhs_elem);
+                log("Rhs: %d\n", rhs_elem);
                 output.write(rhs_elem);
                 rhs.move_right();
             }
@@ -69,7 +69,7 @@ namespace ts
             rhs.move_right();
         }
 
-        ts::log("\nOUT:\n");
+        log("\nOUT:\n");
         output.dump();
 
         return output;
@@ -77,7 +77,7 @@ namespace ts
 
     void copy_n_elems(const ts::Tape& src, ts::Tape& dst, size_t n)
     {
-        ts::info("Make copy, src(%s), dst(%s)\n", src.get_name().c_str(), dst.get_name().c_str());
+        info("Make copy, src(%s), dst(%s)\n", src.get_name().c_str(), dst.get_name().c_str());
 
         if (n == 0)
         {
@@ -95,7 +95,7 @@ namespace ts
             src.move_left();
             dst.move_right();
 
-            ts::log("copy elem(%d)\n", elem);
+            log("copy elem(%d)\n", elem);
 
             --n;
         }
