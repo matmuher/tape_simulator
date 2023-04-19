@@ -27,6 +27,12 @@ namespace ts
 
         bool is_in_borders(size_t i) const;
 
+        static void read_delay();
+
+        static void write_dealy();
+
+        static void move_delay();
+
     public:
 
     // [ctor]

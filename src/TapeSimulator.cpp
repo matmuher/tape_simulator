@@ -1,6 +1,8 @@
 #include <iostream>
 #include <TapeSimulator.hpp>
 #include <Logs.hpp>
+#include <Config.hpp>
+#include <unistd.h>
 
 namespace ts
 {
@@ -56,6 +58,8 @@ namespace ts
 
     void Tape::move_left() const
     {
+        move_delay();
+
         if (head_pos != 0)
         {
             --head_pos;
@@ -64,6 +68,8 @@ namespace ts
 
     void Tape::move_right() const
     {
+        move_delay();
+
         if (head_pos != m_size + 1)
         {
             ++head_pos;
@@ -72,6 +78,8 @@ namespace ts
 
     int Tape::read() const
     {
+        read_delay();
+
         if (is_in_borders(head_pos))
         {
             return vec[head_pos-1];
@@ -83,6 +91,8 @@ namespace ts
     void Tape::write(int val)
     {
         info("Write to %s\n", m_name.c_str());
+
+        write_dealy();
 
         if (is_in_borders(head_pos))
         {
@@ -212,5 +222,20 @@ namespace ts
     bool Tape::is_in_borders(size_t i) const
     {
         return (1 <= i) && (i <= m_size);
+    }
+
+    void Tape::read_delay()
+    {
+        sleep(get_config().read_time);
+    }
+
+    void Tape::write_dealy()
+    {
+        sleep(get_config().write_time);
+    }
+
+    void Tape::move_delay()
+    {
+        sleep(get_config().move_time);
     }
 }
