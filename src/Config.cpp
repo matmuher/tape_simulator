@@ -13,7 +13,7 @@ Config get_config(const std::string& config_name)
         if (!file.is_open())
         {
             std::cout << "[error] Can't config file: " << config_name << '\n';
-            exit(1);
+            exit(0);
         }
 
         file >> config.read_time;
