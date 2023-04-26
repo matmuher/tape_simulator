@@ -47,10 +47,12 @@ jobs:
           cd build
           cmake ../
           make
+          pwd
+          ls
           
       - name: Start tests
         run: |
-          cd ../bin
+          ls
+          pwd
+          cd bin
           ./test_sort
-
-        
