@@ -40,3 +40,17 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
+          
+      - name: Build
+        run: |
+          mkdir build
+          cd build
+          cmake ../
+          make
+          
+      - name: Start tests
+        run: |
+          cd ../bin
+          ./test_sort
+
+        
