@@ -47,12 +47,9 @@ jobs:
           cd build
           cmake ../
           make
-          pwd
-          ls
           
       - name: Start tests
         run: |
-          ls
-          pwd
           cd bin
+          echo "0 0 0" > config.txt
           ./test_sort
