@@ -51,5 +51,5 @@ jobs:
       - name: Start tests
         run: |
           cd bin
-          echo "0 0 0" > config.txt
+          # echo "0 0 0" > config.txt
           ./test_sort
